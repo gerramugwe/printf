@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdio.h>
+#include <stdarg.h>
 
 /**
  * _printf - prints output according to format
@@ -16,6 +17,7 @@ int _printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
+			i++;
 			switch (format[i + 1])
 				{
 					case 'c':
