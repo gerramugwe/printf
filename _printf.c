@@ -3,42 +3,48 @@
 #include <stdarg.h>
 
 /**
- * _printf - prints output according to format
- * @format: string being passed
- * Return: char to be printed
+ * _printf - Printf function
+ * @format: format string
+ * Return: Number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	int i, count = 0;
+	int gk, count = 0;
 	va_list args;
 
+	if (format == NULL)
+		return (-1);
+
 	va_start(args, format);
-	for (i = 0; format[i] != '\0'; i++)
+	if (format == NULL || (format[0] == '%' && format[1] == ''\0'))
+			return(-1);
+	for (gk = 0; format[gk] != '\0'; gk++)
 	{
-		if (format[i] == '%')
+		if (format[gk] == '\0')
+			break;
+		if (format[gk] == '%')
 		{
-			i++;
-			switch (format[i + 1])
-				{
-					case 'c':
-						count += printf(" %c ", va_arg(args, int));
-						break;
-					case 's':
-						count += printf(" %s ", va_arg(args, char *));
-						break;
-					case '%':
-						count += printf(" %% ");
-						break;
-					default:
-						break;
-				}
-				i++;
+			if (format[gk + 1] == '%' )
+			{
+				_putchar( '%' );
+				count ++;
+			}
+			else if (format[gk + 1] == 'c')
+			{
+				count = print_char(args, count);
+			}
+			else if (format[gk + 1] == 's')
+			{
+				count = print_str(args, count);
+			}
+			gk++;
 		}
 		else
 		{
-			count += printf(" %c ", format[i]);
+			_putchar(format[gk]);
+			gk++;
 		}
 	}
-	va_end(args);
-	return (count);
+	va_ends(args);
+	return(count);
 }
