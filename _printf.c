@@ -1,50 +1,24 @@
-#include "main.h"
 #include <stdio.h>
-#include <stdarg.h>
+#include <stdlib.h>
+#include "holberton.h"
 
 /**
- * _printf - Printf function
- * @format: format string
- * Return: Number of characters printed
+ * _printf - function my printf
+ * @format: string whit format to print
+ *
+ * Return: number of chars that print
  */
 int _printf(const char *format, ...)
 {
-	int gk, count = 0;
 	va_list args;
+	int length = 0;
 
 	if (format == NULL)
 		return (-1);
 
 	va_start(args, format);
-	if (format == NULL || (format[0] == '%' && format[1] == ''\0'))
-			return(-1);
-	for (gk = 0; format[gk] != '\0'; gk++)
-	{
-		if (format[gk] == '\0')
-			break;
-		if (format[gk] == '%')
-		{
-			if (format[gk + 1] == '%' )
-			{
-				_putchar( '%' );
-				count ++;
-			}
-			else if (format[gk + 1] == 'c')
-			{
-				count = print_char(args, count);
-			}
-			else if (format[gk + 1] == 's')
-			{
-				count = print_str(args, count);
-			}
-			gk++;
-		}
-		else
-		{
-			_putchar(format[gk]);
-			gk++;
-		}
-	}
-	va_ends(args);
-	return(count);
+
+	length = _print_format(format, args);
+	va_end(args);
+	return (length);
 }
